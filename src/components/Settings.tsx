@@ -60,6 +60,18 @@ const Settings: React.FC<SettingsProps> = ({ options, onChange }) => {
             <span className="ml-2 text-sm text-gray-700">Macシステムファイルを含める</span>
           </label>
         </div>
+        <div className="flex items-center">
+          <label className="flex items-center cursor-pointer">
+            <input
+              type="checkbox"
+              name="notebookLMMode"
+              checked={options.notebookLMMode}
+              onChange={handleChange}
+              className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+            />
+            <span className="ml-2 text-sm text-gray-700">NotebookLMモード (対応ファイルのみ含める)</span>
+          </label>
+        </div>
         <div>
           <label htmlFor="filenameEncoding" className="block text-sm font-medium text-gray-700 mb-1">
             ファイル名のエンコーディング
