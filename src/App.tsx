@@ -18,6 +18,7 @@ function App() {
     delimiter: '-',
     includeHidden: false,
     includeMacSystem: false,
+    notebookLMMode: false,
     filenameEncoding: undefined,
     outputFileName: 'flattened.zip',
   });

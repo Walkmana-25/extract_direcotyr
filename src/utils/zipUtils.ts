@@ -6,9 +6,19 @@ export interface ProcessingOptions {
   delimiter: string;
   includeHidden: boolean;
   includeMacSystem: boolean;
+  notebookLMMode: boolean;
   filenameEncoding?: string;
   outputFileName: string;
 }
+
+export const NOTEBOOK_LM_EXTENSIONS = new Set([
+  // Documents
+  '.docx', '.txt', '.md', '.pdf', '.csv', '.pptx', '.epub',
+  // Images
+  '.avif', '.bmp', '.gif', '.heic', '.heif', '.ico', '.jp2', '.jpe', '.jpeg', '.jpg', '.png', '.tif', '.tiff', '.webp',
+  // Audio
+  '.3g2', '.3gp', '.aac', '.aif', '.aifc', '.aiff', '.amr', '.au', '.avi', '.cda', '.m4a', '.mid', '.mp3', '.mp4', '.mpeg', '.ogg', '.opus', '.ra', '.ram', '.snd', '.wav', '.wma',
+]);
 
 export interface FileItem {
   originalPath: string;
@@ -51,6 +61,15 @@ export const processZipFiles = async (
       if (fileName.startsWith('.')) {
         isSkipped = true;
         skipReason = 'Hidden File';
+      }
+    }
+
+    // Check for NotebookLM supported files
+    if (!isSkipped && options.notebookLMMode) {
+      const ext = path.substring(path.lastIndexOf('.')).toLowerCase();
+      if (!NOTEBOOK_LM_EXTENSIONS.has(ext)) {
+        isSkipped = true;
+        skipReason = 'NotebookLM Unsupported';
       }
     }
 
